@@ -53,13 +53,13 @@
             type: 'error',
             center: true
           });
-          return;
+        return
         }
 
-        //跳转到聊天主界面
-        this.$router.push('/ChatMain')
+        // 跳转到聊天主界面
+        this.$router.push(`/chatMain/${tableNo}/${userName}`)
 
-        //请求后台参数
+        // 请求后台参数
         /*      this.$http.post('/login/luckydeer-websocket/websocket/user/register.do', {
                 userName: userName,
                 tableNo: tableNo
@@ -87,7 +87,7 @@
                   center: true
                 });
                 return
-              })*/
+              }) */
       }
     }
   }
@@ -98,7 +98,7 @@
   .login {
     width: 100%;
     height: 100%;
-    border: 0;
+    border: hidden;
   }
 
   /*容器的宽高*/
