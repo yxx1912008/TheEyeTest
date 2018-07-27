@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <Login></Login>
     <router-view/>
   </div>
 </template>
 
 <script>
-  import Login from './components/chat/Login'
 
   export default {
-    components: {
-      Login
-    }
+    components: {}
   }
 </script>
 
