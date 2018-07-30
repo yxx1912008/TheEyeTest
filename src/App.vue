@@ -5,10 +5,7 @@
 </template>
 
 <script>
-
-  export default {
-    components: {}
-  }
+  export default {}
 </script>
 
 <style>
@@ -18,8 +15,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    padding: 0px;
-    margin: 0px;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -27,4 +22,5 @@
     height: 100%;
     border: hidden;
   }
+
 </style>

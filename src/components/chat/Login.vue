@@ -28,6 +28,7 @@
 <script>
 
   export default {
+    props: ['jump'],
     data() {
       return {
         userName: ''
@@ -53,12 +54,11 @@
             type: 'error',
             center: true
           });
-        return
+          return
         }
 
         // 跳转到聊天主界面
-        this.$router.push(`/chatMain/${tableNo}/${userName}`)
-
+       this.$router.push(`/chatMain/${tableNo}/${userName}`)
         // 请求后台参数
         /*      this.$http.post('/login/luckydeer-websocket/websocket/user/register.do', {
                 userName: userName,
