@@ -1,5 +1,5 @@
 <template>
-  <div id="chatMain">
+  <div id="chatMain" v-loading="showLoading">
     <div class="chat-header">
       <div id="title">
         <p>聊&nbsp;天</p>
@@ -7,20 +7,83 @@
       <!-- 用户列表-->
       <UserList></UserList>
     </div>
-    <ChatBox class="chatBoxMain"></ChatBox>
-    <div class="chat-footer">发送消息</div>
+    <ChatBox></ChatBox>
+    <ChatMainFoot></ChatMainFoot>
   </div>
 </template>
 
 <script>
   import UserList from './UserList'
   import ChatBox from './ChatBox'
+  import ChatMainFoot from './ChatMainFoot'
+  import {WEBSOCKET_URL} from '../constant/Config'
+
 
   export default {
+
+    data() {
+      return {
+        showLoading: false,
+        websocket: null
+      }
+    },
     components: {
-      UserList, ChatBox
+      UserList, ChatBox, ChatMainFoot
+    },
+    methods: {
+      websocketClose: function () {
+        this.websocket.close();
+      },
+      onmessage: function (event) {
+        var result = JSON.parse(event.data)
+
+        switch (result.dataType) {
+          case 'SUCESS_MSG':
+            this.$message.success(result.showMessage);
+            break
+        }
+      }
+    }
+    ,
+    mounted() {
+
+      //判断当前浏览器是否支持WebSocket
+      if (!'WebSocket' in window) {
+        this.$router.back();
+        this.$message.error('您的浏览器不支持！');
+        return
+      }
+
+      var userName = this.$route.params.userName;
+      var tableNo = this.$route.params.tableNo;
+      //1.加载动画
+      this.showLoading = true;
+      //2.连接websocket
+      var socketUrl = WEBSOCKET_URL + userName + '/' + tableNo
+      this.websocket = new WebSocket(socketUrl);
+      //连接成功建立的回调方法
+      this.websocket.onopen = () => {
+        this.showLoading = false
+      }
+
+      //连接发生错误的回调方法
+      this.websocket.onerror = () => {
+        this.$message.error('服务器连接发生错误');
+      };
+
+      //接收到消息的回调方法
+      this.websocket.onmessage = event => {
+        this.onmessage(event);
+      }
+
+
+    },
+    destroyed: function () {
+      //为了避免后台服务器在页面非正常关闭后出错
+      this.websocketClose();
     }
   }
+  ;
 </script>
 
 <style scoped>
@@ -53,15 +116,5 @@
     margin: 0;
   }
 
-  .chat-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 8%;
-    border-top: thin solid gray;
-  }
 
-  .chatBoxMain {
-
-  }
 </style>
