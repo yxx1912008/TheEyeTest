@@ -14,6 +14,7 @@
 
 <script>
   export default {
+    props: ['sendGroupMsg'],
     data() {
       return {
         userInput: ''
@@ -21,7 +22,13 @@
     },
     methods: {
       onSubmit: function () {
-        console.log(this.userInput)
+
+        if (!this.userInput) {
+          this.$message.error('聊天内容不能为空');
+          return
+        }
+        this.sendGroupMsg(this.userInput)
+        this.userInput = ''
       }
     }
   };

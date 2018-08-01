@@ -19,5 +19,14 @@ export default {
     userName: '小鸟',
     tableNo: '01',
     iconUrl: '/static/headIcon/angry-birds.png'
-  }]
+  }],
+  chatList: [
+    {
+      time: '2018年7月30日 17:42:32',
+      iconUrl: '/static/headIcon/angry-birds.png',
+      userName: '管理员',
+      chatMessange: '欢迎进入本聊天室'
+    }
+
+  ]
 }

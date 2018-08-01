@@ -8,7 +8,7 @@
       <UserList></UserList>
     </div>
     <ChatBox></ChatBox>
-    <ChatMainFoot></ChatMainFoot>
+    <ChatMainFoot :sendGroupMsg="sendGroupMsg"></ChatMainFoot>
   </div>
 </template>
 
@@ -48,9 +48,24 @@
           case 'ON_LINE_NOTICE':
             this.$message(result.data);
             break
-
+          case 'GROUP_MSG':
+            console.log(`您收到一条组群消息:${result.data.chatMessange}`)
+            this.$store.dispatch('addChatBox', result.data)
+            break;
         }
-
+      },
+      //用户发送信息
+      sendGroupMsg: function (messange) {
+        console.log(`用户输入的信息是:${messange}`)
+        var userName = this.$route.params.userName;
+        var tableNo = this.$route.params.tableNo;
+        const groupMessange = {
+          userName: userName,
+          tableNo: tableNo,
+          msgType: 'GROUP_MSG',
+          messange: messange
+        }
+        this.websocket.send(JSON.stringify(groupMessange))
       }
     }
     ,
