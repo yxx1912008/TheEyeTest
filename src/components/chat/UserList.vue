@@ -1,6 +1,7 @@
 <template>
   <ul class="user-list">
-    <UserInfo v-for="(item,index) in userInfos" :item="item" :index="index">
+    <!--最多只显示四个用户-->
+    <UserInfo v-for="(item,index) in userInfos" v-if="index<=3" :item="item" :index="index">
     </UserInfo>
   </ul>
 </template>

@@ -2,7 +2,7 @@
   <div class="chat-footer">
     <el-form :inline="true" size="medium">
       <el-form-item>
-        <el-input placeholder="请输入信息"></el-input>
+        <el-input v-model="userInput" placeholder="请输入信息"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">发送</el-button>
@@ -14,10 +14,14 @@
 
 <script>
   export default {
-
+    data() {
+      return {
+        userInput: ''
+      }
+    },
     methods: {
       onSubmit: function () {
-
+        console.log(this.userInput)
       }
     }
   };

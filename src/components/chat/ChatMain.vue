@@ -18,9 +18,7 @@
   import ChatMainFoot from './ChatMainFoot'
   import {WEBSOCKET_URL} from '../constant/Config'
 
-
   export default {
-
     data() {
       return {
         showLoading: false,
@@ -35,13 +33,24 @@
         this.websocket.close();
       },
       onmessage: function (event) {
+        console.log(event.data)
         var result = JSON.parse(event.data)
-
+        //判断接收消息的类型
         switch (result.dataType) {
+          //成功消息
           case 'SUCESS_MSG':
             this.$message.success(result.showMessage);
+            break;
+          //用户列表
+          case 'USER_LIST':
+            this.$store.dispatch('updateUserInfos', JSON.parse(result.data))
+            break;
+          case 'ON_LINE_NOTICE':
+            this.$message(result.data);
             break
+
         }
+
       }
     }
     ,
@@ -69,6 +78,9 @@
       //连接发生错误的回调方法
       this.websocket.onerror = () => {
         this.$message.error('服务器连接发生错误');
+        setTimeout(() => {
+          this.$router.back()
+        }, 1000)
       };
 
       //接收到消息的回调方法
