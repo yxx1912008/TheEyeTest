@@ -6,7 +6,7 @@
       </el-header>
       <el-main>
         <el-card class="box-card">
-          <img src="/static/headIcon/angry-birds.png" alt="" class="icon_head">
+          <img src="../../../static/headIcon/angry-birds.png" alt="" class="icon_head">
           <el-form label-position="left" center=true>
             <el-form-item label="名称" label-width="40px">
               <el-input placeholder="请输入您的名称" size="medium" v-model="userName"></el-input>
